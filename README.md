@@ -1,13 +1,27 @@
+# Notes
+For the architecture use on this application i used Domain Driven Design and Hexagonal Architecture.
+By using this architectures, it relays quite a lot on have strong types for all domain entities and the know its own validations so they are consistent accross uses.
+For such a small project it was not necessarly required, but i wanted to produce code that is closer to production ready code that could greatly gurantee reliability.
+Some interfaces currently only have one method and they could had been just a function type instead of a common interface, but it is ready for future extensions with more functionallity that would be very common for this domain, for example, CRUD of new features flags.
+
+For unit tests i decided not extensively test all domain object and application servives because i think the most important peace of logic in the feature flag selection.
+
+# How to install
+
+Do the following install commands:
+```npm install -g ts-node```
+```npm install -g typescript```
+```npm install```
+
+# How to run
+```npm run serve```
+
+# How to test
+```npm test```
+
 # Feature flag test
 
-Your task is to create a simple feature flag API. A feature flag is, according to Wikipedia:
-
-> A feature toggle (also feature switch, feature flag, feature flipper, conditional feature, etc.) is a technique in software development that attempts to provide an alternative to maintaining multiple source-code branches (known as feature branches), such that a feature can be tested even before it is completed and ready for release. Feature toggle is used to hide, enable or disable the feature during run time. For example, during the development process, a developer can enable the feature for testing and disable it for other users.
-
-Source:
-https://en.wikipedia.org/wiki/Feature_toggle
-
-For this task, we want to create feature flag to allow us to conduct an A/B test. Each flag document has:
+Create feature flag to allow us to conduct an A/B test. Each flag document has:
 
 ```
 {
@@ -30,12 +44,23 @@ Each user has the following information:
 
 Given the list of feature flags in `features.json` , your task is to create an API endpoint that returns a list of the features that are enabled for a given user’s email and location. A list of example users are included in `example_users.json`.
 
-You can use any frameworks/libraries you like. Be sure to include tests and instructions on how to run the project.
+# API
 
-# Submission
+To check request for the list of features supported for a given user you have to do a request to the server:
 
-Clone this repository and make your commits to that (removing origin and making a new public repository) and send us the link to the repository when you are finished.
+```
+POST /flags
+{
+    "email":"foo@bar.com",
+    "location":"GB"
+}
+```
 
-# Notes
+The expected result is a list of flag names of the supported features.
 
-This exercise should not take more than 3 hours. If you have any questions about the task, don’t hesitate to shoot us an e-mail at ed@zzish.com.
+```
+[ "feature1", "feature2" ]
+```
+
+# Test users 
+If you want to test a test sample for the example users you can start the server using `npm run serve` and then on other console start `npm run test-sample`
