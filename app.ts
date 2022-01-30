@@ -16,6 +16,11 @@ const featureFlagService = new FeatureFlagApplicationServiceImpl(
 
 app.use('/flags', featureFlagRouter(express.Router(), featureFlagService))
 
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).json({ error: 'Something broke!' })
+})
+
 app.listen(port, () => {
   console.log(`The application is running on port ${port}.`)
 })
